@@ -44,10 +44,12 @@ public class TodoService {
 	 * Créé un document Todo.
 	 * @param body
 	 */
-	public void createNewTodo(String body) {
+	public Document createNewTodo(String body) {
 		Todo todo = new Gson().fromJson(body, Todo.class);
-		collection.insertOne(new Document("title", todo.getTitle()).append("done",
-				todo.isDone()).append("createdOn", new Date()) );
+		Document document = new Document("title", todo.getTitle()).append("done",
+				todo.isDone()).append("createdOn", new Date());
+		collection.insertOne(document );
+		return document;
 	}
 
 	/**

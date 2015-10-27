@@ -5,6 +5,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
 
+import org.bson.Document;
+
 import com.google.gson.Gson;
 import com.todoapp.service.TodoService;
 
@@ -25,10 +27,10 @@ public class TodoResource {
 
 	private void setupEndpoints() {
 		post(API_CONTEXT + "/todos", "application/json", (request, response) -> {
-			todoService.createNewTodo(request.body());
+			Document document = todoService.createNewTodo(request.body());
 			response.status(201);
 			response.type("application/json");
-			return "OK";
+			return document.toJson();
 		});
 
 		get(API_CONTEXT + "/todos/:id", "application/json", (request, response)
